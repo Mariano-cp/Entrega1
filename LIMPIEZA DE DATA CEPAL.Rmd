@@ -1,0 +1,36 @@
+LIMPIEZA DE DATA CEPAL
+
+eliminamos las columnas que no sirven
+```{r}
+CEPAL[,c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40)] = NULL
+```
+
+corregimos los nombres de los paises
+```{r}
+library(stringr)
+
+test=CEPAL$País
+test
+str_split(test,pattern = '[(]')
+
+CEPAL$País=str_split(CEPAL$País, pattern = '[(]', simplify = T)[,1]
+```
+
+eliminamos las columnas que no usaremos en el análisis
+-en el caso de mi grupo, elegiremos un año dentro de estos intervalos "2000-2005","2005-2010","2010-2015","2015-2020".
+-en mi caso elegiré los años 2004(6),2009 (11),2014 (16), 2019(20).
+```{r}
+CEPAL[,c(2,3,4,5,7,8,9,10,12,13,14,15,17,18,19)] = NULL
+```
+
+convertimos las variables a numéricas
+```{r}
+CEPAL[,c(2:5)]=lapply(CEPAL[,c(2:4)],as.numeric)
+```
+
+convertimos la columnas País a nominal
+```{r}
+CEPAL$País=as.factor(CEPAL$País)
+```
+
+En mi grupo coindidimos en que cada integrante utilizará el total de países con el que le vino la data.
